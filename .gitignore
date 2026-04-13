@@ -1,0 +1,35 @@
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Visual Studio Code
+.vscode/
+
+# Node.js dependencies and build artifacts (if you add tooling later)
+node_modules/
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# User-specific files
+*.local
+
+# Ignore GitHub Pages build output if you generate one locally
+_site/
+dist/
+build/

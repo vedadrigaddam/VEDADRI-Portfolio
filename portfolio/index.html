@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vedadri Gaddam — Flutter Developer</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --bg: #0A0A0F;
+      --bg2: #111118;
+      --bg3: #18181F;
+      --accent: #7C5CFC;
+      --accent2: #C084FC;
+      --accent3: #38BDF8;
+      --text: #F0EFF8;
+      --text2: #9B9AAA;
+      --text3: #5A5A6E;
+      --card: #16161E;
+      --border: #2A2A38;
+      --grad: linear-gradient(135deg, #7C5CFC, #C084FC, #38BDF8);
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0
+    }
+
+    .orb1 {
+      width: 400px;
+      height: 400px;
+      background: rgba(124, 92, 252, 0.12);
+      top: -100px;
+      left: -100px
+    }
+
+    .orb2 {
+      width: 300px;
+      height: 300px;
+      background: rgba(56, 189, 248, 0.08);
+      bottom: 20%;
+      right: -80px
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(42, 42, 56, 0.5);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--text2);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text)
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem !important;
+      font-weight: 500 !important;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      letter-spacing: 0.03em !important;
+      text-transform: none !important;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.85
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      padding-top: 80px
+    }
+
+    section {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 4rem
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(124, 92, 252, 0.12);
+      border: 1px solid rgba(124, 92, 252, 0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.78rem;
+      color: var(--accent2);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      width: fit-content;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent2);
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.3
+      }
+    }
+
+    h1.hero-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title .line2 {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text2);
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      font-weight: 300
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(124, 92, 252, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(124, 92, 252, 0.5)
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, color 0.2s;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text3);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 0.2rem
+    }
+
+    /* SECTION LABELS */
+    .section-label {
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.75rem
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem
+    }
+
+    /* EXPERIENCE — tighter */
+    .exp-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--grad)
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem
+    }
+
+    .exp-role {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem
+    }
+
+    .exp-company {
+      color: var(--accent2);
+      font-weight: 500;
+      margin-top: 0.2rem;
+      font-size: 0.9rem
+    }
+
+    .exp-date {
+      background: rgba(124, 92, 252, 0.1);
+      border: 1px solid rgba(124, 92, 252, 0.25);
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      font-size: 0.78rem;
+      color: var(--accent2);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem
+    }
+
+    .exp-bullets li {
+      color: var(--text2);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      padding-left: 1.2rem;
+      position: relative
+    }
+
+    .exp-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.4rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px)
+    }
+
+    .skill-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(124, 92, 252, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem
+    }
+
+    .skill-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.7rem
+    }
+
+    .tag {
+      background: rgba(42, 42, 56, 0.8);
+      color: var(--text2);
+      padding: 0.22rem 0.65rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      border: 1px solid var(--border);
+      font-weight: 500
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem
+    }
+
+    .proj-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.6rem;
+      transition: border-color 0.3s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .proj-card:hover {
+      border-color: rgba(124, 92, 252, 0.5);
+      transform: translateY(-4px)
+    }
+
+    .proj-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      opacity: 0.6
+    }
+
+    .proj-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem
+    }
+
+    .proj-desc {
+      font-size: 0.85rem;
+      color: var(--text2);
+      line-height: 1.65;
+      flex: 1
+    }
+
+    .proj-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent3);
+      font-size: 0.78rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: gap 0.2s
+    }
+
+    .proj-link:hover {
+      gap: 0.7rem
+    }
+
+    /* AI CHAT */
+    .ai-section {
+      background: var(--bg2);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(124, 92, 252, 0.08)
+    }
+
+    .ai-header {
+      padding: 1.2rem 1.8rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(124, 92, 252, 0.04)
+    }
+
+    .ai-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0
+    }
+
+    .ai-info h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem
+    }
+
+    .ai-info p {
+      font-size: 0.75rem;
+      color: var(--text3);
+      margin-top: 0.1rem
+    }
+
+    .ai-status {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.73rem;
+      color: #4ade80
+    }
+
+    .ai-status::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: pulse 2s infinite
+    }
+
+    .chat-window {
+      height: 340px;
+      overflow-y: auto;
+      padding: 1.25rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent
+    }
+
+    .msg {
+      display: flex;
+      flex-direction: column;
+      max-width: 82%;
+      animation: fadeUp 0.3s ease
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .msg.bot {
+      align-self: flex-start
+    }
+
+    .msg.user {
+      align-self: flex-end;
+      align-items: flex-end
+    }
+
+    .msg-bubble {
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      line-height: 1.6
+    }
+
+    .msg.bot .msg-bubble {
+      background: rgba(124, 92, 252, 0.12);
+      border: 1px solid rgba(124, 92, 252, 0.2);
+      color: var(--text);
+      border-bottom-left-radius: 4px
+    }
+
+    .msg.user .msg-bubble {
+      background: var(--accent);
+      color: #fff;
+      border-bottom-right-radius: 4px
+    }
+
+    .msg-time {
+      font-size: 0.65rem;
+      color: var(--text3);
+      margin-top: 0.25rem;
+      padding: 0 0.3rem
+    }
+
+    .chat-suggestions {
+      padding: 0 1.8rem 0.9rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap
+    }
+
+    .suggestion {
+      background: rgba(42, 42, 56, 0.6);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 0.35rem 0.85rem;
+      border-radius: 40px;
+      font-size: 0.73rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500
+    }
+
+    .suggestion:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      background: rgba(124, 92, 252, 0.1)
+    }
+
+    .chat-input-area {
+      padding: 0.9rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(10, 10, 15, 0.4)
+    }
+
+    .chat-input {
+      flex: 1;
+      background: rgba(42, 42, 56, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 0.6rem 1.1rem;
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s
+    }
+
+    .chat-input::placeholder {
+      color: var(--text3)
+    }
+
+    .chat-input:focus {
+      border-color: rgba(124, 92, 252, 0.5)
+    }
+
+    .send-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      flex-shrink: 0
+    }
+
+    .send-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 15px rgba(124, 92, 252, 0.5)
+    }
+
+    .send-btn svg {
+      width: 15px;
+      height: 15px;
+      fill: white
+    }
+
+    .typing {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 0.2rem 0
+    }
+
+    .typing span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: bounce 1.2s infinite
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: 0.2s
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: 0.4s
+    }
+
+    @keyframes bounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0)
+      }
+
+      30% {
+        transform: translateY(-6px)
+      }
+    }
+
+    /* API KEY NOTICE */
+    .api-notice {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 0.9rem 1.2rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.82rem;
+      color: var(--accent3);
+      line-height: 1.6;
+    }
+
+    .api-notice strong {
+      color: #fff
+    }
+
+    .api-notice a {
+      color: var(--accent3)
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem
+    }
+
+    .contact-info h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin-bottom: 1rem
+    }
+
+    .contact-info p {
+      color: var(--text2);
+      line-height: 1.75;
+      font-size: 0.9rem;
+      margin-bottom: 2rem
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s
+    }
+
+    .contact-link:hover {
+      color: var(--text)
+    }
+
+    .contact-link-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: rgba(124, 92, 252, 0.1);
+      border: 1px solid rgba(124, 92, 252, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0
+    }
+
+    .edu-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem
+    }
+
+    .edu-item {
+      background: rgba(42, 42, 56, 0.4);
+      border-radius: 12px;
+      padding: 1.2rem;
+      border: 1px solid var(--border)
+    }
+
+    .edu-deg {
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 0.3rem
+    }
+
+    .edu-inst {
+      color: var(--accent2);
+      font-size: 0.78rem
+    }
+
+    .edu-year {
+      color: var(--text3);
+      font-size: 0.73rem;
+      margin-top: 0.3rem
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text3);
+      font-size: 0.8rem;
+      position: relative;
+      z-index: 1
+    }
+
+    @media(max-width:700px) {
+      nav .nav-links {
+        display: none
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero-stats {
+        gap: 1.5rem
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <nav>
+    <div class="nav-logo">VG</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#chat">AI Chat</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="about">
+      <div class="hero-badge">Available for work</div>
+      <h1 class="hero-title">
+        Full-Stack<br>
+        <span class="line2">Flutter Dev</span>
+      </h1>
+      <p class="hero-desc">Building scalable Android, iOS & Web applications with Flutter and Dart. Specializing in
+        clean architecture, performance optimization, and pixel-perfect UI.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <button class="btn-outline" onclick="document.getElementById('chat').scrollIntoView({behavior:'smooth'})">Chat
+          with AI ✦</button>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">2+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div>
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Live Apps</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">On-time Delivery</div>
+        </div>
+        <div>
+          <div class="stat-num">3x</div>
+          <div class="stat-label">Platforms</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" style="padding-top:0">
+      <div class="section-label">Work History</div>
+      <h2 class="section-title">Experience</h2>
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Software Engineer — Flutter</div>
+            <div class="exp-company">StarMeda Private Limited · Hyderabad</div>
+          </div>
+          <div class="exp-date">Mar 2024 – Present</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Architected scalable mobile &amp; web apps for Android, iOS, and Web using MVVM/MVC with clean code and
+            responsive UI/UX.</li>
+          <li>Built maintainable apps with Bloc &amp; Provider; integrated REST APIs, GraphQL, Firebase, payment
+            gateways, and in-app purchases.</li>
+          <li>Spearheaded AI tooling adoption — lovable.dev, bolt.new, GitHub Copilot — to accelerate development speed
+            and code quality.</li>
+          <li>Mentored junior developers, enforced Agile best practices, and achieved a 100% on-time delivery rate.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-label">Tech Stack</div>
+      <h2 class="section-title">Skills &amp; Tools</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-card-icon">📱</div>
+          <h3>Mobile &amp; Web</h3>
+          <p style="font-size:0.8rem;color:var(--text3);line-height:1.55">Cross-platform apps targeting Android, iOS,
+            and Web with pixel-perfect responsiveness.</p>
+          <div class="tags"><span class="tag">Flutter</span><span class="tag">Dart</span><span
+              class="tag">Android</span><span class="tag">iOS</span><span class="tag">Web</span><span
+              class="tag">Figma→Flutter</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-icon">🏗</div>
+          <h3>Architecture</h3>
+          <p style="font-size:0.8rem;color:var(--text3);line-height:1.55">Clean Architecture, MVVM, dependency
+            injection, and robust state management.</p>
+          <div class="tags"><span class="tag">Clean Arch</span><span class="tag">MVVM</span><span
+              class="tag">BLoC</span><span class="tag">Provider</span><span class="tag">DI</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-icon">🔌</div>
+          <h3>Backend &amp; APIs</h3>
+          <p style="font-size:0.8rem;color:var(--text3);line-height:1.55">Full backend integration from REST to GraphQL,
+            Node.js services, and Firebase.</p>
+          <div class="tags"><span class="tag">REST APIs</span><span class="tag">GraphQL</span><span
+              class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Firebase</span><span
+              class="tag">MongoDB</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-icon">💳</div>
+          <h3>Integrations</h3>
+          <p style="font-size:0.8rem;color:var(--text3);line-height:1.55">Third-party integrations for payments,
+            shipping, auth, and automation.</p>
+          <div class="tags"><span class="tag">Payments</span><span class="tag">Shiprocket</span><span
+              class="tag">Zapier</span><span class="tag">Social Auth</span><span class="tag">WooCommerce</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-icon">🧰</div>
+          <h3>DevOps &amp; Tools</h3>
+          <p style="font-size:0.8rem;color:var(--text3);line-height:1.55">Version control, caching strategies, and
+            AI-powered development tooling.</p>
+          <div class="tags"><span class="tag">Git</span><span class="tag">GitHub</span><span
+              class="tag">SQLite</span><span class="tag">Hive</span><span class="tag">GitHub Copilot</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-icon">🌐</div>
+          <h3>Frontend Web</h3>
+          <p style="font-size:0.8rem;color:var(--text3);line-height:1.55">Web fundamentals and styling for hybrid and
+            web-first Flutter apps.</p>
+          <div class="tags"><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span
+              class="tag">Bootstrap</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-label">Work</div>
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+        <div class="proj-card">
+          <div class="proj-num">01</div>
+          <div class="proj-name">Dubilist</div>
+          <p class="proj-desc">OLX-style mobile marketplace for buying and selling products. Features product listings,
+            category browsing, search/filter, and buyer-seller interaction flows.</p>
+          <div class="tags"><span class="tag">Flutter</span><span class="tag">Marketplace</span><span
+              class="tag">Android</span></div>
+          <a class="proj-link" href="https://play.google.com/store/apps/details?id=com.dubilist.dubilist_app"
+            target="_blank">Play Store →</a>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">02</div>
+          <div class="proj-name">Letshop</div>
+          <p class="proj-desc">Flutter e-commerce app for browsing and purchasing electronics. Built cart, checkout,
+            payment gateway integration, and Provider state management.</p>
+          <div class="tags"><span class="tag">Flutter</span><span class="tag">E-commerce</span><span
+              class="tag">Provider</span></div>
+          <a class="proj-link" href="https://play.google.com/store/apps/details?id=com.letshop.android"
+            target="_blank">Play Store →</a>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">03</div>
+          <div class="proj-name">Roomy Finder</div>
+          <p class="proj-desc">Room, PG, and roommate discovery app. Search by budget, location, and amenities; connect
+            with owners via in-app chat; landlords post listings for fast matching.</p>
+          <div class="tags"><span class="tag">Flutter</span><span class="tag">Real Estate</span><span
+              class="tag">Chat</span></div>
+          <a class="proj-link" href="https://play.google.com/store/apps/details?id=com.dubilist.dubilist_app"
+            target="_blank">Play Store →</a>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">04</div>
+          <div class="proj-name">Stardeas</div>
+          <p class="proj-desc">Startup ideas platform letting entrepreneurs create, save, and share business ideas —
+            plus request expert development quotes to turn ideas into real apps.</p>
+          <div class="tags"><span class="tag">Flutter</span><span class="tag">SaaS</span><span
+              class="tag">Startups</span></div>
+          <a class="proj-link" href="https://play.google.com/store/apps/details?id=com.starmeda.stardeas"
+            target="_blank">Play Store →</a>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">05</div>
+          <div class="proj-name">Cyphare User Portal</div>
+          <p class="proj-desc">Web-based platform for business registration, compliance tracking, and resource booking
+            with AI-powered career path trees and a learning system. (70% complete)</p>
+          <div class="tags"><span class="tag">Flutter Web</span><span class="tag">AI Features</span><span
+              class="tag">B2B</span></div>
+          <span style="font-size:0.78rem;color:var(--text3);font-style:italic">Pending launch</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI CHAT -->
+    <section id="chat">
+      <div class="section-label">Ask Anything</div>
+      <h2 class="section-title">Chat with My AI</h2>
+      <p style="color:var(--text2);margin-bottom:1.5rem;font-size:0.9rem;line-height:1.7">Ask me anything about
+        Vedadri's experience, tech stack, projects, or availability — I'll answer instantly!</p>
+
+      <div class="ai-section">
+        <div class="ai-header">
+          <div class="ai-avatar">🤖</div>
+          <div class="ai-info">
+            <h3>Vedadri's AI Assistant</h3>
+            <p>Knows everything about Vedadri's work &amp; skills</p>
+          </div>
+          <div class="ai-status">Online</div>
+        </div>
+        <div class="chat-window" id="chatWindow">
+          <div class="msg bot">
+            <div class="msg-bubble">Hey! 👋 I'm Vedadri's AI assistant. Ask me about his Flutter projects, tech stack,
+              experience, or whether he's available to hire!</div>
+            <div class="msg-time">Just now</div>
+          </div>
+        </div>
+        <div class="chat-suggestions" id="suggestions">
+          <button class="suggestion" onclick="askSuggestion('What tech stack does Vedadri use?')">Tech stack?</button>
+          <button class="suggestion" onclick="askSuggestion('Tell me about his best projects')">Best projects?</button>
+          <button class="suggestion" onclick="askSuggestion('Is he available for freelance work?')">Available to
+            hire?</button>
+          <button class="suggestion"
+            onclick="askSuggestion('What is his experience with Flutter state management?')">State management?</button>
+        </div>
+        <div class="chat-input-area">
+          <input class="chat-input" id="chatInput" placeholder="Ask about skills, projects, availability..."
+            onkeydown="if(event.key==='Enter')sendMsg()">
+          <button class="send-btn" onclick="sendMsg()">
+            <svg viewBox="0 0 24 24">
+              <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / EDUCATION -->
+    <section id="contact">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">Contact &amp; Education</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Let's work together</h3>
+          <p>Open to full-time roles, freelance projects, and collaborations. Based in Hyderabad, Telangana — available
+            for remote work globally.</p>
+          <div class="contact-links">
+            <a class="contact-link" href="mailto:vedadrigaddam014@gmail.com">
+              <div class="contact-link-icon">✉</div>
+              vedadrigaddam014@gmail.com
+            </a>
+            <a class="contact-link" href="tel:+917013464044">
+              <div class="contact-link-icon">📞</div>
+              +91 70134 64044
+            </a>
+            <a class="contact-link" href="https://www.linkedin.com/in/vedadri-gaddam-451b09314/" target="_blank">
+              <div class="contact-link-icon">in</div>
+              LinkedIn Profile
+            </a>
+            <a class="contact-link" href="https://github.com" target="_blank">
+              <div class="contact-link-icon">⌨</div>
+              GitHub Profile
+            </a>
+          </div>
+        </div>
+        <div>
+          <p class="section-label" style="margin-bottom:1rem">Education</p>
+          <div class="edu-stack">
+            <div class="edu-item">
+              <div class="edu-deg">B.Tech — Electronics &amp; Instrumentation Engineering</div>
+              <div class="edu-inst">VRSEC · Vijayawada, Andhra Pradesh</div>
+              <div class="edu-year">2021 – 2024</div>
+            </div>
+            <div class="edu-item">
+              <div class="edu-deg">Diploma — Electronics &amp; Instrumentation Engineering</div>
+              <div class="edu-inst">AANM &amp; VVRSR · Gudlavalleru, Andhra Pradesh</div>
+              <div class="edu-year">2018 – 2021</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p
+      style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:600;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem">
+      Vedadri Gaddam</p>
+    <p>Full-Stack Flutter Developer · Hyderabad, India</p>
+  </footer>
+
+  <script>
+    const GEMINI_API_KEY = "AIzaSyCTwM0PZkuPlT9Ai0tmAZy38buUAEFWsKk";
+
+    const RESUME_CONTEXT = `You are an AI assistant on Vedadri Gaddam's portfolio website. Answer questions about Vedadri concisely and helpfully. Keep answers to 2-4 sentences. Use simple plain text only, no markdown symbols like **, ##, or *.
+
+ABOUT: Full-Stack Flutter Developer, 2+ years experience, Hyderabad, India.
+Email: vedadrigaddam014@gmail.com | Phone: +91 7013464044
+
+EXPERIENCE: StarMeda Private Limited (Mar 2024–Present) as Software Engineer (Flutter).
+- Builds MVVM/MVC apps for Android, iOS, Web using Flutter & Dart
+- State management: Bloc, Provider
+- REST APIs, GraphQL, Firebase, payment gateways, in-app purchases
+- AI tooling: lovable.dev, bolt.new, GitHub Copilot
+- Mentors junior devs, 100% on-time delivery with Agile
+
+PROJECTS:
+1. Dubilist – OLX-style marketplace (Android)
+2. Letshop – Flutter e-commerce with payments
+3. Roomy Finder – Room/PG discovery with in-app chat
+4. Stardeas – Startup ideas platform
+5. Cyphare User Portal – B2B web platform with AI features (70% done)
+
+SKILLS: Flutter, Dart, Bloc, Provider, Clean Architecture, MVVM, REST, GraphQL, Node.js, Express, Firebase, MongoDB, SQLite, Hive, Git, HTML/CSS, JS, Bootstrap, payment gateways, Zapier, Shiprocket.
+
+EDUCATION: B.Tech EIE – VRSEC (2021–2024), Diploma EIE – AANM & VVRSR (2018–2021).
+
+If asked about hiring/availability: he is open to opportunities, contact via email above.`;
+
+    let chatHistory = [];
+
+    function getTime() {
+      const n = new Date();
+      return n.getHours().toString().padStart(2, '0') + ':' + n.getMinutes().toString().padStart(2, '0');
+    }
+
+    function appendMsg(text, role) {
+      const win = document.getElementById('chatWindow');
+      const div = document.createElement('div');
+      div.className = 'msg ' + role;
+      div.innerHTML = `<div class="msg-bubble">${text}</div><div class="msg-time">${getTime()}</div>`;
+      win.appendChild(div);
+      win.scrollTop = win.scrollHeight;
+    }
+
+    function showTyping() {
+      const win = document.getElementById('chatWindow');
+      const div = document.createElement('div');
+      div.className = 'msg bot'; div.id = 'typing-indicator';
+      div.innerHTML = '<div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
+      win.appendChild(div); win.scrollTop = win.scrollHeight;
+    }
+
+    function removeTyping() {
+      const t = document.getElementById('typing-indicator'); if (t) t.remove();
+    }
+
+    async function askSuggestion(text) {
+      document.getElementById('suggestions').style.display = 'none';
+      await sendMsgText(text);
+    }
+
+    async function sendMsg() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      document.getElementById('suggestions').style.display = 'none';
+      await sendMsgText(text);
+    }
+
+    async function sendMsgText(userText) {
+      appendMsg(userText, 'user');
+      chatHistory.push({ role: 'user', parts: [{ text: userText }] });
+      showTyping();
+      try {
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: RESUME_CONTEXT }] },
+              contents: chatHistory,
+              generationConfig: { maxOutputTokens: 300, temperature: 0.7 }
+            })
+          }
+        );
+        const data = await res.json();
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I had trouble responding. Please try again!';
+        removeTyping();
+        chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+        appendMsg(reply, 'bot');
+      } catch (e) {
+        removeTyping();
+        appendMsg('Connection issue. Please email Vedadri at <a href="mailto:vedadrigaddam014@gmail.com" style="color:var(--accent3)">vedadrigaddam014@gmail.com</a>', 'bot');
+      }
+    }
+  </script>
+</body>
+
+</html>
